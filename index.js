@@ -4,6 +4,8 @@ const express = require('express')
 const route = require("./routes/client/index.route")
 // ENV
 require('dotenv').config();
+// DATABASE
+const mongoose = require("mongoose")
 
 // app is the biggest file
 const app = express()
@@ -13,6 +15,9 @@ const port = process.env.PORT
 // PUG
 app.set('views', './views') 
 app.set('view engine', 'pug')
+
+// DATABASE
+mongoose.connect(process.env.MONGO_URL)
 
 // STATIC FILE
 app.use(express.static('public'))
