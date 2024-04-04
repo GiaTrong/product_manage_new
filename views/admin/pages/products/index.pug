@@ -1,5 +1,6 @@
 extend ../../layouts/default.pug
 include ../../mixins/filter-status
+include ../../mixins/search
 
 block main
     h1 #{pageTitle}
@@ -7,8 +8,11 @@ block main
     .card.mb-3
         card-header Bộ lọc và Tìm kiếm
         .card-body
-            +filter-status(filterStatus)
-            
+            .row
+                .col-6
+                    +filter-status(filterStatus)
+                .col-6
+                    +search(keyword)
 
     .card.mb-3
         card-header #{pageTitle}

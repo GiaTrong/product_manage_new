@@ -14,8 +14,28 @@ if (btnStatus.length > 0) {
         url.searchParams.delete("status");
       }
 
-      window.location.href = url.href
+      window.location.href = url.href;
     });
   });
 }
 // END BUTTON STATSUS
+
+// SEARCH
+const formSearch = document.querySelector("#form-search");
+if (formSearch) {
+  formSearch.addEventListener("submit", (e) => {
+    e.preventDefault();
+    //
+    const keyword = e.target.elements.keyword.value;
+
+    if (keyword) {
+      url.searchParams.set("keyword", keyword);
+    } else {
+      url.searchParams.delete("keyword");
+    }
+
+    window.location.href = url.href;
+
+  });
+}
+// END SEARCH
