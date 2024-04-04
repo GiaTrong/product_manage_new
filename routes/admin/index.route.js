@@ -1,4 +1,4 @@
-const systemConfig = require("../../config/ system.js")
+const systemConfig = require("../../config/system.js")
 
 const dashboardRoutes = require("./dashboard.route.js");
 
