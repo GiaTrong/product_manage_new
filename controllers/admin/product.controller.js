@@ -29,7 +29,7 @@ module.exports.index = async (req, res) => {
     // filter DATA follow params
     find.status = req.query.status;
 
-    // CHANGE active
+    // CHANGE CLASS active
     filterStatus.forEach(item => {
       if(item.status == req.query.status) {
         item.class = "active";
