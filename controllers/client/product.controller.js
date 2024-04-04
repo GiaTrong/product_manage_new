@@ -4,6 +4,7 @@ const Product = require("../../models/product.model")
 module.exports.index = async (req, res) => {
   // find({CONDITION}) => find all products which fit(phù hợp) with condition
   const products = await Product.find({
+    status: "active",
     deleted: false,
   });
 
