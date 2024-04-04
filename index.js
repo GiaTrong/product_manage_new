@@ -4,6 +4,7 @@ const express = require('express')
 const route = require("./routes/client/index.route")
 // ENV
 require('dotenv').config();
+
 // app is the biggest file
 const app = express()
 // port: 
@@ -13,7 +14,10 @@ const port = process.env.PORT
 app.set('views', './views') 
 app.set('view engine', 'pug')
 
-// ROUTEs
+// STATIC FILE
+app.use(express.static('public'))
+
+// ROUTE
 route(app);
 
 
