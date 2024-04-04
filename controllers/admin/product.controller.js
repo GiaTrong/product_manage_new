@@ -2,7 +2,7 @@ const Product = require("../../models/product.model");
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
-  // Buttons for user click to filter follow status
+  // Buttons for user click to filter DATA follow status
   let filterStatus = [
     {
       name: "Tất cả",
@@ -21,6 +21,7 @@ module.exports.index = async (req, res) => {
     },
   ]
 
+  // CONDITION of filter DATA
   let find = {
     deleted: false,
   };
@@ -39,10 +40,10 @@ module.exports.index = async (req, res) => {
     })
   }
 
-  // GIVE product
+  // GIVE product by FIND
   const products = await Product.find(find);
 
-  console.log(products);
+  // console.log(products);
 
   res.render("admin/pages/products/index.pug", {
     pageTitle: "Trang quản lí sản phẩm",
