@@ -2,6 +2,7 @@
 const express = require('express')
 // ROUTES
 const route = require("./routes/client/index.route")
+const routeAdmin = require("./routes/admin/index.route")
 // ENV
 require('dotenv').config();
 // DATABASE
@@ -24,6 +25,7 @@ app.use(express.static('public'))
 
 // ROUTE
 route(app);
+routeAdmin(app);
 
 
 app.listen(port, () => {
