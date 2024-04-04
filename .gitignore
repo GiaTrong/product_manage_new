@@ -1,0 +1,8 @@
+# file naỳ là file loại trừ khi mà đẩy lên trên github
+
+#dependencies
+/node_modules
+
+
+#misc
+.env
