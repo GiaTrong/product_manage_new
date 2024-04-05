@@ -46,7 +46,10 @@ module.exports.index = async (req, res) => {
   if(req.query.keyword) {
     keyword = req.query.keyword
 
-    find.title = req.query.keyword
+    // use REGEX for searching DATA which similar keyword
+    const regex = new RegExp(keyword, "i");
+
+    find.title = regex
   }
 
   // GIVE product by FIND
