@@ -1,26 +1,12 @@
 const Product = require("../../models/product.model");
+const filterStatusHelper = require('../../helpers/filterStatus')
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
-  // Buttons for user click to filter DATA follow status
-  let filterStatus = [
-    {
-      name: "Tất cả",
-      status: "",
-      class: "active"
-    },
-    {
-      name: "Hoạt động",
-      status: "active",
-      class: ""
-    },
-    {
-      name: "Dừng hoạt động",
-      status: "inactive",
-      class: ""
-    },
-  ]
 
+  // FILTER STATUS
+  const filterStatus = filterStatusHelper(req);
+  
   // CONDITION of filter DATA
   let find = {
     deleted: false,
@@ -29,15 +15,6 @@ module.exports.index = async (req, res) => {
   if(req.query.status) {
     // filter DATA follow params
     find.status = req.query.status;
-
-    // CHANGE CLASS active
-    filterStatus.forEach(item => {
-      if(item.status == req.query.status) {
-        item.class = "active";
-      } else {
-        item.class = "";
-      }
-    })
   }
 
   // SEARCH BY KEYWORD
