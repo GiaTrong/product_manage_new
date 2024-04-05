@@ -40,14 +40,23 @@ module.exports.index = async (req, res) => {
     })
   }
 
+  // SEARCH BY KEYWORD
+  // fix cứng 
+  let keyword = "";
+  if(req.query.keyword) {
+    keyword = req.query.keyword
+
+    find.title = req.query.keyword
+  }
+
   // GIVE product by FIND
   const products = await Product.find(find);
 
-  // console.log(products);
 
   res.render("admin/pages/products/index.pug", {
     pageTitle: "Trang quản lí sản phẩm",
     products: products,
-    filterStatus: filterStatus
+    filterStatus: filterStatus,
+    keyword: keyword
   });
 };
