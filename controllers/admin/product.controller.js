@@ -55,3 +55,12 @@ module.exports.index = async (req, res) => {
     pagination: objectPagination,
   });
 };
+
+// [GET] /admin/change-status/:status/:id
+module.exports.changeStatus = (req, res) => {
+  const status = req.params.status
+  const id = req.params.id
+
+
+  res.send(status + " - " + id)
+}
