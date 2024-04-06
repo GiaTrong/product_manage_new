@@ -43,15 +43,30 @@ block main
                             td
                                 if (item.status == "active")
                                     a(
-                                        href=`products/change-status/inactive/${item.id}`
+                                        href=`javascript:;`
+                                        button-change-status
+                                        data-status='active'
+                                        data-id=item.id
                                         class="btn btn-success"
                                     ) Hoạt động
                                 else
                                     a(
-                                        href=`products/change-status/active/${item.id}`
+                                        href=`javascript:;`
+                                        button-change-status
+                                        data-status='inactive'
+                                        data-id=item.id
                                         class="btn btn-danger"
                                     ) Dừng Hoạt động
                             td
                                 button(class="btn btn-warning btn-sm") Sửa
                                 button(class="btn btn-danger btn-sm ml-1") Xóa
     +pagination(pagination)
+
+    form(
+        action=""
+        method="get"
+        id="form-change-status"
+        data-path=`${prefixAdmin}/products/change-status`
+    ) 
+
+    script(src="/admin/js/product.js") 
