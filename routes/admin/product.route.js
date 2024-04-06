@@ -6,6 +6,6 @@ route.get('/', controller.index);
 
 route.patch ('/change-status/:status/:id', controller.changeStatus);
 
-route.patch ('/change-multi', controller.changeStatus);
+route.patch ('/change-multi', controller.changeMulti);
 
 module.exports = route;

@@ -2,6 +2,8 @@
 const express = require('express')
 // METHOD OVERRIDE
 const methodOverride = require('method-override')
+// BODY PARSER
+var bodyParser = require('body-parser')
 
 // ROUTES
 const route = require("./routes/client/index.route")
@@ -19,6 +21,9 @@ const port = process.env.PORT
 
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'))
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // PUG
 app.set('views', './views') 
