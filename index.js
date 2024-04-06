@@ -1,5 +1,8 @@
 // import express
 const express = require('express')
+// METHOD OVERRIDE
+const methodOverride = require('method-override')
+
 // ROUTES
 const route = require("./routes/client/index.route")
 const routeAdmin = require("./routes/admin/index.route")
@@ -13,6 +16,9 @@ const systemConfig = require("./config/system")
 const app = express()
 // port: 
 const port = process.env.PORT
+
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'))
 
 // PUG
 app.set('views', './views') 

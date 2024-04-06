@@ -11,7 +11,7 @@ if(buttonChangeStatus) {
 
             let statusChange = statusCurrent == "active" ? "inactive" : "active";
 
-            const action = path + `/${statusChange}/${id}`;
+            const action = path + `/${statusChange}/${id}?_method=PATCH`;
 
             formChangeStatus.action = action
 
