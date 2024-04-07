@@ -58,38 +58,55 @@ module.exports.index = async (req, res) => {
 
 // [PATCH] /admin/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
-  const status = req.params.status
-  const id = req.params.id
+  const status = req.params.status;
+  const id = req.params.id;
 
-  await Product.updateOne({_id: id}, {status: status})
+  await Product.updateOne({ _id: id }, { status: status });
 
-  res.redirect("back")
-}
+  res.redirect("back");
+};
 
 // [PATCH] /admin/change-multi
 module.exports.changeMulti = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
 
   const type = req.body.type;
   const ids = req.body.ids.split(", ");
 
   // UPDATE nhiều sản phẩm
-  await Product.updateMany({_id: {$in: ids}}, {status: type})
+  switch (type) {
+    case "active":
+      await Product.updateMany({ _id: { $in: ids } }, { status: type });
+      break;
+    case "inactive":
+      await Product.updateMany({ _id: { $in: ids } }, { status: type });
+      break;
+    case "delete-all":
+      await Product.updateMany({ _id: { $in: ids } }, {
+         deleted: true,
+         deleteAt: new Date(),
+        });
+      break;
+    default:
+      break;
+  }
 
   // res.send("oke")
-  res.redirect("back")
-}
+  res.redirect("back");
+};
 
 // [DELETE] /admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {
+  const id = req.params.id;
 
-  const id = req.params.id
-
-  await Product.updateOne({_id: id}, {
-    deleted: true,
-    deleteAt: new Date(),
-  })
+  await Product.updateOne(
+    { _id: id },
+    {
+      deleted: true,
+      deleteAt: new Date(),
+    }
+  );
 
   // res.send("oke")
-  res.redirect("back")
-}
+  res.redirect("back");
+};

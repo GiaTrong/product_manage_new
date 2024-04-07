@@ -118,6 +118,12 @@ if (formChangeMulti) {
       case "inactive":
         changeMultiStatus(inputChecked);
         break;
+      case "delete-all":
+        const isConfirm = confirm("Bạn có chắc chắn muốn xóa hết không");
+        if (isConfirm) {
+          changeMultiStatus(inputChecked);
+        }
+        break;
       default:
         break;
     }
