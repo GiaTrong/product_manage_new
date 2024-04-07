@@ -2,6 +2,7 @@ const Product = require("../../models/product.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
+const systemConfig = require("../../config/system")
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
@@ -125,4 +126,33 @@ module.exports.deleteItem = async (req, res) => {
 
   // res.send("oke")
   res.redirect("back");
+};
+
+// [GET] /admin/products/create
+module.exports.create = async (req, res) => {
+  res.render("admin/pages/products/create", {
+    pageTitle: "Trang thêm mới sản phẩm"
+  })
+};
+
+// [GET] /admin/products/createPost
+module.exports.createPost = async (req, res) => {
+  req.body.price = parseInt(req.body.price);
+  req.body.stock = parseInt(req.body.stock);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+
+  // case: POSITION : AUTO INCREASE
+  if (req.body.position == "") {
+    const countProduct = await Product.countDocuments();
+    req.body.position = countProduct + 1;
+  } else {
+    req.body.position = parseInt(req.body.position);
+  }
+
+  // create new Product
+  const product = new Product(req.body);
+  // saving in DATABASE
+  await product.save();
+  // render viewer
+  res.redirect(`${systemConfig.prefixAdmin}/products`);
 };
