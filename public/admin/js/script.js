@@ -113,16 +113,19 @@ if (formChangeMulti) {
 
     switch (typeChange) {
       case "active":
-        changeMultiStatus(inputChecked);
+        changeMultiStatus(inputChecked, "active");
         break;
       case "inactive":
-        changeMultiStatus(inputChecked);
+        changeMultiStatus(inputChecked, "inactive");
         break;
       case "delete-all":
         const isConfirm = confirm("Bạn có chắc chắn muốn xóa hết không");
         if (isConfirm) {
-          changeMultiStatus(inputChecked);
+          changeMultiStatus(inputChecked, "delete-all");
         }
+        break;
+      case "change-position":
+        changeMultiStatus(inputChecked, "change-position");
         break;
       default:
         break;
@@ -131,16 +134,22 @@ if (formChangeMulti) {
 }
 
 // FUNCTION changeMultiStatus
-function changeMultiStatus(inputChecked) {
-  // Lấy những thằng ID đã được check ra và biến nó thành 1 string => sublmit
+function changeMultiStatus(inputChecked, type) {
   if (inputChecked.length > 0) {
-    // 1 mảng để lưu các id của sp muốn thay đổi
     let ids = [];
     const inputIds = formChangeMulti.querySelector("input[name='ids']");
     //
     inputChecked.forEach((input) => {
       const id = input.value;
-      ids.push(id);
+
+      // change-position
+      if (type == "change-position") {
+        const position = givePosition(input);
+
+        ids.push(`${id}-${position}`);
+      } else {
+        ids.push(id);
+      }
     });
 
     // biến từ mảng về thành string
@@ -151,6 +160,14 @@ function changeMultiStatus(inputChecked) {
   } else {
     alert("Vui lòng chọn ít nhất 1 bản ghi");
   }
+}
+
+function givePosition(input) {
+  const position = input // đứng từ thằng input
+    .closest("tr") // lấy ra thằng cha của nó
+    .querySelector("input[name='position']"); // từ thằng cha, lấy vào thằng con khác
+
+  return position.value;
 }
 // END FUNCTION changeMultiStatus
 // END FROM CHANGE-MULTI

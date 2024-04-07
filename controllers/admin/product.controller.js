@@ -87,6 +87,16 @@ module.exports.changeMulti = async (req, res) => {
          deleteAt: new Date(),
         });
       break;
+    case "change-position":
+      for (const item of ids) {
+        // cấu trúc destructering phá vỡ cấu trúc
+        let [id, position] = item.split("-");
+        // parse từ String => int
+        position = parseInt(position)
+        // update
+        await Product.updateOne({_id: id}, {position: position})
+      }
+      break;
     default:
       break;
   }
