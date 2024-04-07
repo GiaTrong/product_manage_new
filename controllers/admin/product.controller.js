@@ -44,6 +44,7 @@ module.exports.index = async (req, res) => {
   // .limit(number) => chỉ lấy tưng đấy sản phẩm thôi
   // skip: bỏ qua bao nhiêu sản phẩm
   const products = await Product.find(find)
+    .sort({position: "desc"})
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
 
