@@ -108,25 +108,43 @@ if (formChangeMulti) {
       "input[name='id']:checked"
     );
 
-    // Lấy những thằng ID đã được check ra và biến nó thành 1 string => sublmit
-    if (inputChecked.length > 0) {
-      // 1 mảng để lưu các id của sp muốn thay đổi
-      let ids = [];
-      const inputIds = formChangeMulti.querySelector("input[name='ids']");
-      //
-      inputChecked.forEach((input) => {
-        const id = input.value;
-        ids.push(id);
-      });
+    const typeChange = e.target.elements.type.value;
+    console.log(typeChange);
 
-      // biến từ mảng về thành string
-      inputIds.value = ids.join(", ");
-
-      // submit form
-      formChangeMulti.submit();
-    } else {
-      alert("Vui lòng chọn ít nhất 1 bản ghi");
+    switch (typeChange) {
+      case "active":
+        changeMultiStatus(inputChecked);
+        break;
+      case "inactive":
+        changeMultiStatus(inputChecked);
+        break;
+      default:
+        break;
     }
   });
 }
+
+// FUNCTION changeMultiStatus
+function changeMultiStatus(inputChecked) {
+  // Lấy những thằng ID đã được check ra và biến nó thành 1 string => sublmit
+  if (inputChecked.length > 0) {
+    // 1 mảng để lưu các id của sp muốn thay đổi
+    let ids = [];
+    const inputIds = formChangeMulti.querySelector("input[name='ids']");
+    //
+    inputChecked.forEach((input) => {
+      const id = input.value;
+      ids.push(id);
+    });
+
+    // biến từ mảng về thành string
+    inputIds.value = ids.join(", ");
+
+    // submit form
+    formChangeMulti.submit();
+  } else {
+    alert("Vui lòng chọn ít nhất 1 bản ghi");
+  }
+}
+// END FUNCTION changeMultiStatus
 // END FROM CHANGE-MULTI
