@@ -82,19 +82,22 @@ module.exports.changeMulti = async (req, res) => {
       await Product.updateMany({ _id: { $in: ids } }, { status: type });
       break;
     case "delete-all":
-      await Product.updateMany({ _id: { $in: ids } }, {
-         deleted: true,
-         deleteAt: new Date(),
-        });
+      await Product.updateMany(
+        { _id: { $in: ids } },
+        {
+          deleted: true,
+          deleteAt: new Date(),
+        }
+      );
       break;
     case "change-position":
       for (const item of ids) {
         // cấu trúc destructering phá vỡ cấu trúc
         let [id, position] = item.split("-");
         // parse từ String => int
-        position = parseInt(position)
+        position = parseInt(position);
         // update
-        await Product.updateOne({_id: id}, {position: position})
+        await Product.updateOne({ _id: id }, { position: position });
       }
       break;
     default:
