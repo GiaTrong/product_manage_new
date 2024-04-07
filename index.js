@@ -1,9 +1,15 @@
 // import express
 const express = require('express')
+// Cookie-parser
+const cookieParser = require('cookie-parser')
+// Express-session
+const session = require('express-session')
 // METHOD OVERRIDE
 const methodOverride = require('method-override')
 // BODY PARSER
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
+// Express Flash
+const flash = require('express-flash')
 
 // ROUTES
 const route = require("./routes/client/index.route")
@@ -18,6 +24,11 @@ const systemConfig = require("./config/system")
 const app = express()
 // port: 
 const port = process.env.PORT
+
+// Express Flash
+app.use(cookieParser('Absafsdfsdaf'));
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash());
 
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'))

@@ -5,6 +5,14 @@ include ../../mixins/pagination
 include ../../mixins/form-change-multi
 
 block main
+    -if (messages.success)
+        .message.info
+            div(
+                class="alert alert-success"
+                show-alert
+                data-time=500 
+            ) #{messages.success} <span close-alert> x <span>
+
     h1 #{pageTitle}
 
     .card.mb-3

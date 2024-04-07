@@ -171,3 +171,24 @@ function givePosition(input) {
 }
 // END FUNCTION changeMultiStatus
 // END FROM CHANGE-MULTI
+
+// SHOW ALERT
+const showAlert = document.querySelector("[show-alert]");
+console.log(showAlert);
+
+if (showAlert) {
+  const time = parseInt(showAlert.getAttribute("data-time"));
+
+  setTimeout(() => {
+    showAlert.classList.add("alert-hidden");
+  }, time);
+
+  const closeAlert = showAlert.querySelector("[close-alert]");
+  if (closeAlert) {
+    showAlert.addEventListener("click", () => {
+      showAlert.classList.add("alert-hidden");
+    });
+  }
+}
+
+// END SHOW ALERT
