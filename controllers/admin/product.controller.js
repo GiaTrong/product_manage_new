@@ -85,7 +85,10 @@ module.exports.deleteItem = async (req, res) => {
 
   const id = req.params.id
 
-  await Product.updateOne({_id: id}, {deleted: true})
+  await Product.updateOne({_id: id}, {
+    deleted: true,
+    deleteAt: new Date(),
+  })
 
   // res.send("oke")
   res.redirect("back")
