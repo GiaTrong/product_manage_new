@@ -8,4 +8,6 @@ route.patch ('/change-status/:status/:id', controller.changeStatus);
 
 route.patch ('/change-multi', controller.changeMulti);
 
+route.delete ('/delete/:id', controller.deleteItem);
+
 module.exports = route;
