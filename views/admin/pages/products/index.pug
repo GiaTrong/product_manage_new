@@ -3,15 +3,10 @@ include ../../mixins/filter-status
 include ../../mixins/search
 include ../../mixins/pagination
 include ../../mixins/form-change-multi
+include ../../mixins/alert
 
 block main
-    -if (messages.success)
-        .message.info
-            div(
-                class="alert alert-success"
-                show-alert
-                data-time=500 
-            ) #{messages.success} <span close-alert> x <span>
+    +alert-success(500)
 
     h1 #{pageTitle}
 
