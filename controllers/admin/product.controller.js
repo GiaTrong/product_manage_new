@@ -2,7 +2,11 @@ const Product = require("../../models/product.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
-const systemConfig = require("../../config/system")
+const systemConfig = require("../../config/system");
+
+// UP IMAGE
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
@@ -45,7 +49,7 @@ module.exports.index = async (req, res) => {
   // .limit(number) => chỉ lấy tưng đấy sản phẩm thôi
   // skip: bỏ qua bao nhiêu sản phẩm
   const products = await Product.find(find)
-    .sort({position: "desc"})
+    .sort({ position: "desc" })
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
 
@@ -65,7 +69,7 @@ module.exports.changeStatus = async (req, res) => {
 
   await Product.updateOne({ _id: id }, { status: status });
 
-  req.flash("success", "Cập nhật trạng thái thành công")
+  req.flash("success", "Cập nhật trạng thái thành công");
 
   res.redirect("back");
 };
@@ -131,8 +135,8 @@ module.exports.deleteItem = async (req, res) => {
 // [GET] /admin/products/create
 module.exports.create = async (req, res) => {
   res.render("admin/pages/products/create", {
-    pageTitle: "Trang thêm mới sản phẩm"
-  })
+    pageTitle: "Trang thêm mới sản phẩm",
+  });
 };
 
 // [GET] /admin/products/createPost
