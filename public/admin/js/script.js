@@ -192,3 +192,22 @@ if (showAlert) {
 }
 
 // END SHOW ALERT
+
+// UPLOAD IMAGE
+const uploadImage = document.querySelector("[upload-image]")
+if(uploadImage) {
+  const uploadImageInput = document.querySelector("[upload-image-input]")
+  const uploadImagePreview = document.querySelector("[upload-image-preview]")
+
+  uploadImageInput.addEventListener('change', (e) => {
+    // const file = e.target.files[0];
+    const [file] = e.target.files; // destructuring
+    console.log(file)
+    if(file) {
+      uploadImagePreview.src = URL.createObjectURL(file) // truyền file vào cái src của ảnh
+    }
+  }) 
+
+
+}
+// END UPLOAD IMAGE
