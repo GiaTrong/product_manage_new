@@ -3,9 +3,8 @@ const express = require('express')
 const multer  = require('multer')
 const route = express.Router();
 
-const upload = multer({ dest: "./public/uploads/" })
-// Đường dẫn đến FOLDER lưu trữ ảnh - Bởi vì đứng từ thằng multer(trong file NODE MODULE 
-// => ĐỨNG từ file CẤP CAO NHẤT RỒI => chỉ cần ./public/uploads nữa thôi       )
+const storageMulter = require("../../helpers/storageMulter")
+const upload = multer({ storage:  storageMulter() })
 
 const controller = require("../../controllers/admin/product.controller")
 
