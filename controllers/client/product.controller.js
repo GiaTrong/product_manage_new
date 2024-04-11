@@ -20,3 +20,23 @@ module.exports.index = async (req, res) => {
         products: newProducts
       });
 }
+
+//[GET] module.exports.index : index is name of function
+module.exports.detail = async (req, res) => {
+  try {
+    const product = await Product.findOne({
+      deleted: false,
+      status: "active",
+      slug: req.params.slug,
+    });
+    console.log(product);
+
+    // render in viewer
+    res.render("client/pages/products/detail", {
+      pageTitle: "Chi tiet san pham",
+      product: product,
+    });
+  } catch (error) {
+    res.redirect("back");
+  }
+};
