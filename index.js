@@ -44,9 +44,7 @@ app.set('view engine', 'pug')
 database.connect();
 
 // STATIC FILE
-app.use(express.static(`${__dirname}/public`)) 
-// Khi đẩy lên online => không hiểu public là gì 
-// Phải thêm trường nữa
+app.use(express.static(`${__dirname}/public`))
 
 //  APP VARIABLES LOCALS
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
