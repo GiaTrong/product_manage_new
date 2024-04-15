@@ -166,7 +166,7 @@ module.exports.edit = async (req, res) => {
 
   const product = await Product.findOne(find);
 
-  console.log(product)
+  console.log(product);
 
   res.render("admin/pages/products/edit", {
     pageTitle: "Trang chỉnh sửa sản phẩm",
@@ -207,7 +207,7 @@ module.exports.detail = async (req, res) => {
 
   const product = await Product.findOne(find);
 
-  console.log(product)
+  console.log(product);
 
   res.render("admin/pages/products/detail", {
     pageTitle: product.title,
