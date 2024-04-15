@@ -26,21 +26,24 @@ if (buttonChangeStatus) {
 const buttonsDelete = document.querySelectorAll("[button-delete]");
 if (buttonsDelete) {
   const formDeleteItem = document.querySelector("#form-delete-item");
-  const path = formDeleteItem.getAttribute("data-path");
+  if(formDeleteItem) {
+    const path = formDeleteItem.getAttribute("data-path");
 
-  buttonsDelete.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const isConfirm = confirm("Bạn có chắc chắn muốn xóa sản phẩm này không");
+    buttonsDelete.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const isConfirm = confirm("Bạn có chắc chắn muốn xóa sản phẩm này không");
 
-      if (isConfirm) {
-        const id = btn.getAttribute("data-id");
+        if (isConfirm) {
+          const id = btn.getAttribute("data-id");
 
-        formDeleteItem.action = path + `/${id}?_method=DELETE`;
+          formDeleteItem.action = path + `/${id}?_method=DELETE`;
 
-        formDeleteItem.submit();
-      }
+          formDeleteItem.submit();
+        }
+      });
     });
-  });
+  }
+  
 }
 // END DELETE ITEM
 
@@ -62,3 +65,28 @@ if (buttonRestore) {
   });
 }
 // END RESTORE
+
+// DELETE HARD
+const buttonsDeleteHard = document.querySelectorAll("[button-delete-hard]")
+// console.log(buttonsDeleteHard)
+if(buttonsDeleteHard) {
+  buttonsDeleteHard.forEach(item => {
+
+    const formPath = document.querySelector("#form-delete-item-hard")
+
+    item.addEventListener('click', (e) => {
+      // DELETE OR NOT
+      const confirmDelete = confirm("Bạn có chắc chắn là xóa sản phẩm này không.\n Bạn không thể hoàn tất hành động này.")
+
+      if(confirmDelete) {
+        // GIVE DATA
+        const id = item.getAttribute("data-id")
+        // CHANGE ACTION => give ID item
+        formPath.action = `${formPath.getAttribute("data-path")}/${id}?_method=DELETE`;
+
+        formPath.submit();
+      }
+    })
+  })
+}
+// END DELETE HARD

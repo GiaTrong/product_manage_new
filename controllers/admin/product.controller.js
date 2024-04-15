@@ -273,3 +273,15 @@ module.exports.restore = async (req, res) => {
 
   res.redirect("back");
 };
+
+// [DELETE] /admin/products/deleteHard/:id
+module.exports.deleteHard = async (req, res) => {
+  const id = req.params.id;
+
+  await Product.deleteOne({_id: id})
+
+  req.flash("success", "Bạn đã xóa thành công")
+
+  // res.send("oke")
+  res.redirect("back");
+};

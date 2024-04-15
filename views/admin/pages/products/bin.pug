@@ -67,7 +67,7 @@ block main
                                 button(
                                     class="btn btn-danger btn-sm ml-1"
                                     data-id=item.id 
-                                    button-delete
+                                    button-delete-hard
                                 ) Xóa
                                 button(
                                     class="btn btn-success btn-sm ml-1"
@@ -79,8 +79,8 @@ block main
     form(
         action=""
         method="POST"
-        id="form-delete-item"
-        data-path=`${prefixAdmin}/products/delete`
+        id="form-delete-item-hard"
+        data-path=`${prefixAdmin}/products/deleteHard`
     ) 
 
     form(

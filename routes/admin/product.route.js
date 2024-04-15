@@ -44,6 +44,8 @@ route.get("/detail/:id", controller.detail);
 route.get("/bin", controller.bin);
 
 route.patch("/restore/:id", controller.restore);
+
+route.delete("/deleteHard/:id", controller.deleteHard);
 // END BIN
 
 module.exports = route;
