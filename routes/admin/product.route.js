@@ -46,6 +46,8 @@ route.get("/bin", controller.bin);
 route.patch("/restore/:id", controller.restore);
 
 route.delete("/deleteHard/:id", controller.deleteHard);
+
+route.patch("/change-multi-bin", controller.changeMultiBin);
 // END BIN
 
 module.exports = route;

@@ -285,3 +285,30 @@ module.exports.deleteHard = async (req, res) => {
   // res.send("oke")
   res.redirect("back");
 };
+
+// [PATCH] /admin/products/changeMultiBin
+module.exports.changeMultiBin = async (req, res) => {
+  const type = req.body.type;
+  const ids = req.body.ids;
+
+  const idsArr = ids.split(", ");
+
+  switch (type) {
+    case "delete-all":
+      await Product.deleteMany({ _id: { $in: idsArr } });
+
+      req.flash("success", "Bạn xóa thành công");
+      break;
+    case "restore":
+      await Product.updateMany({ _id: { $in: idsArr } }, { deleted: false });
+
+      req.flash("success", "Bạn khôi phục thành công");
+      break;
+    default:
+      req.flash("error", "Bạn thực hiện hành động thất bại");
+      break;
+  }
+
+  // res.send("oke")
+  res.redirect("back");
+};

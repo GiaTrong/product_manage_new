@@ -1,11 +1,12 @@
 extend ../../layouts/default.pug
 include ../../mixins/filter-status
 include ../../mixins/pagination
-include ../../mixins/form-change-multi
+include ../../mixins/form-change-multi-bin
 include ../../mixins/alert
 
 block main
     +alert-success(500)
+    +alert-error(500)
 
     h1 #{pageTitle}
 
@@ -20,7 +21,7 @@ block main
         .card-body
             .row 
                 .col-8
-                    +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+                    +form-change-multi-bin(`${prefixAdmin}/products/change-multi-bin?_method=PATCH`)
 
             table(
                 class=".table .table-hover .table-lg"
@@ -88,6 +89,12 @@ block main
         method="POST"
         id="form-restore-item"
         data-path=`${prefixAdmin}/products/restore`
+    ) 
+
+    form(
+        action=`${prefixAdmin}/products/changeMultiBin`
+        method="POST"
+        id="form-restore-item"
     ) 
 
     script(src="/admin/js/product.js") 

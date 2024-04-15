@@ -1,0 +1,20 @@
+mixin form-change-multi-bin(path)
+    form(
+        action=path 
+        method="POST"
+        form-change-multi-bin
+    )
+        .d-flex.align-items-start
+            .form-group
+                select(name="type" class="form-control")
+                    option(disable selected) --- Chọn hành động ---
+                    option(value="delete-all") Xóa tất cả
+                    option(value="restore") Khôi phục tất cả
+            .form-group
+                input(
+                    type="text"
+                    name="ids"
+                    value=""
+                    class="form-control"
+                )
+            button(type="submit" class="btn btn-primary") Áp dụng

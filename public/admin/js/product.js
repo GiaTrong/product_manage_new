@@ -94,3 +94,38 @@ if (buttonsDeleteHard) {
   });
 }
 // END DELETE HARD
+
+// CHANGE-MULTI-BIN
+const changeMultiBin = document.querySelector("[form-change-multi-bin]");
+if (changeMultiBin) {
+  changeMultiBin.addEventListener("submit", (e) => {
+    e.preventDefault();
+    //
+    const inputIds = changeMultiBin.querySelector("input[name='ids']");
+
+    // give CHECKED input
+    const checkBoxMulti = document.querySelector("[checkbox-multi]");
+    const inputChecked = checkBoxMulti.querySelectorAll(
+      "input[name='id']:checked"
+    );
+
+    // find ARRAY ID
+    let ids = [];
+    inputChecked.forEach((item) => {
+      ids.push(item.value);
+    });
+
+    // ARRAY => STRING
+    inputIds.value = ids.join(", ");
+
+    const confirmChange = confirm(
+      "Bạn có chắc chắn thực hiện hành động này.\nHành động không thể hoàn tất."
+    );
+
+    // ENSURING active change
+    if (confirmChange) {
+      changeMultiBin.submit();
+    }
+  });
+}
+// END CHANGE-MULTI-BIN
