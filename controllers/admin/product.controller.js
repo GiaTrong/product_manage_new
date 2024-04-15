@@ -224,3 +224,52 @@ module.exports.detail = async (req, res) => {
     product: product,
   });
 };
+
+// [GET] /admin/bin
+module.exports.bin = async (req, res) => {
+  // CONDITION of filter DATA
+  let find = {
+    deleted: true,
+  };
+
+  // FILTER STATUS
+  const filterStatus = filterStatusHelper(req);
+
+  // PAGINATION
+  const countProduct = await Product.countDocuments(find);
+
+  let objectPagination = paginationHelper(
+    {
+      currentPage: 1,
+      limitItem: 6,
+    },
+    req,
+    countProduct
+  );
+
+  // GIVE product by FIND
+  const products = await Product.find(find)
+    .sort({price: "desc"})
+    .limit(objectPagination.limitItem)
+    .skip(objectPagination.skip);
+
+    // console.log(products) 
+
+  res.render("admin/pages/products/bin.pug", {
+    pageTitle: "Trang quản lí sản phẩm đã xóa",
+    products: products,
+    filterStatus: filterStatus,
+    pagination: objectPagination,
+  });
+};
+
+// [PATCH] /admin/restore/:id
+module.exports.restore = async (req, res) => {
+  const id = req.params.id;
+
+  await Product.updateOne({ _id: id }, { deleted: false });
+
+  req.flash("success", "Cập nhật trạng thái thành công");
+
+  res.redirect("back");
+};

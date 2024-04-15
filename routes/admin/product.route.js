@@ -40,4 +40,10 @@ route.patch(
 
 route.get("/detail/:id", controller.detail);
 
+// BIN
+route.get("/bin", controller.bin);
+
+route.patch("/restore/:id", controller.restore);
+// END BIN
+
 module.exports = route;
