@@ -249,11 +249,11 @@ module.exports.bin = async (req, res) => {
 
   // GIVE product by FIND
   const products = await Product.find(find)
-    .sort({price: "desc"})
+    .sort({ price: "desc" })
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
 
-    // console.log(products) 
+  // console.log(products)
 
   res.render("admin/pages/products/bin.pug", {
     pageTitle: "Trang quản lí sản phẩm đã xóa",
