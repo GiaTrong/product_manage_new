@@ -37,14 +37,16 @@ app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // PUG
-app.set('views', './views') 
+app.set('views', `${__dirname}/views`) 
 app.set('view engine', 'pug')
 
 // CONNECT DATABSE
 database.connect();
 
 // STATIC FILE
-app.use(express.static('public'))
+app.use(express.static(`${__dirname}/public`)) 
+// Khi đẩy lên online => không hiểu public là gì 
+// Phải thêm trường nữa
 
 //  APP VARIABLES LOCALS
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
