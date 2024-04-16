@@ -1,5 +1,7 @@
 // import express
 const express = require('express')
+// path
+const path = require('path');
 // Cookie-parser
 const cookieParser = require('cookie-parser')
 // Express-session
@@ -29,6 +31,9 @@ const port = process.env.PORT
 app.use(cookieParser('Absafsdfsdaf'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
+
+// TINYMCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'))
