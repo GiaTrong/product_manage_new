@@ -2,6 +2,8 @@ const productCategory = require("../../models/product-category.model");
 
 const systemConfig = require("../../config/system");
 
+const createTreeHelper = require("../../helpers/createTree")
+
 // [GET] /admin/products-category
 module.exports.index = async (req, res) => {
   const find = {
@@ -10,16 +12,29 @@ module.exports.index = async (req, res) => {
 
   const records = await productCategory.find(find);
 
+  const newRecords = createTreeHelper.createTree(records);
+
   res.render("admin/pages/product-category/index.pug", {
     pageTitle: "Trang danh mục sản phẩm",
-    records: records,
+    records: newRecords,
   });
 };
 
 // [GET] /admin/products-category/create
-module.exports.create = (req, res) => {
+module.exports.create = async (req, res) => {
+  const find = {
+    deleted: false,
+  };
+
+  const records = await productCategory.find(find);
+
+  const newRecords = createTreeHelper.createTree(records);
+
+  // console.log(newRecords)
+
   res.render("admin/pages/product-category/create.pug", {
     pageTitle: "Tạo danh mục",
+    records: newRecords,
   });
 };
 
