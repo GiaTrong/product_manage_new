@@ -82,8 +82,6 @@ module.exports.changeStatus = async (req, res) => {
 
 // [PATCH] /admin/change-multi
 module.exports.changeMulti = async (req, res) => {
-  console.log(req.body);
-
   const type = req.body.type;
   const ids = req.body.ids.split(", ");
 
@@ -176,8 +174,6 @@ module.exports.edit = async (req, res) => {
 
   const product = await Product.findOne(find);
 
-  console.log(product);
-
   res.render("admin/pages/products/edit", {
     pageTitle: "Trang chỉnh sửa sản phẩm",
     product: product,
@@ -197,7 +193,6 @@ module.exports.editPatch = async (req, res) => {
   }
 
   try {
-    console.log(req.body);
     await Product.updateOne({ _id: id }, req.body);
 
     req.flash("success", "Update thành công");
@@ -216,8 +211,6 @@ module.exports.detail = async (req, res) => {
   };
 
   const product = await Product.findOne(find);
-
-  console.log(product);
 
   res.render("admin/pages/products/detail", {
     pageTitle: product.title,
@@ -252,8 +245,6 @@ module.exports.bin = async (req, res) => {
     .sort({ price: "desc" })
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
-
-  // console.log(products)
 
   res.render("admin/pages/products/bin.pug", {
     pageTitle: "Trang quản lí sản phẩm đã xóa",
