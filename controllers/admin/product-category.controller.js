@@ -14,8 +14,6 @@ module.exports.index = async (req, res) => {
 
   const newRecords = createTreeHelper.createTree(records);
 
-  console.log(newRecords)
-
   res.render("admin/pages/product-category/index.pug", {
     pageTitle: "Trang danh mục sản phẩm",
     records: newRecords,

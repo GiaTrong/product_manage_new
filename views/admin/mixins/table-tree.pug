@@ -50,6 +50,7 @@ mixin table-tree(records, level = 1)
                 a(
                     href=`${prefixAdmin}/products-category/edit/${item.id}`
                     class="btn btn-warning btn-sm"
+                    parent_id=item.parent_id
                 ) Sửa
                 button(
                     class="btn btn-danger btn-sm ml-1"
