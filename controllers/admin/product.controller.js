@@ -165,19 +165,22 @@ module.exports.createPost = async (req, res) => {
   res.redirect(`${systemConfig.prefixAdmin}/products`);
 };
 
-// [PATCH] /admin/products/edit/:id
+// [GET] /admin/products/edit/:id
 module.exports.edit = async (req, res) => {
   const find = {
     deleted: false,
     _id: req.params.id,
   };
+  try {
+    const product = await Product.findOne(find);
 
-  const product = await Product.findOne(find);
-
-  res.render("admin/pages/products/edit", {
-    pageTitle: "Trang chỉnh sửa sản phẩm",
-    product: product,
-  });
+    res.render("admin/pages/products/edit", {
+      pageTitle: "Trang chỉnh sửa sản phẩm",
+      product: product,
+    });
+  } catch (error) {
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+  }
 };
 
 // [PATCH] /admin/products/edit/:id
@@ -210,12 +213,16 @@ module.exports.detail = async (req, res) => {
     _id: req.params.id,
   };
 
-  const product = await Product.findOne(find);
+  try {
+    const product = await Product.findOne(find);
 
-  res.render("admin/pages/products/detail", {
-    pageTitle: product.title,
-    product: product,
-  });
+    res.render("admin/pages/products/detail", {
+      pageTitle: product.title,
+      product: product,
+    });
+  } catch (error) {
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+  }
 };
 
 // [GET] /admin/bin
