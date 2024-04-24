@@ -8,4 +8,8 @@ route.get("/create", roleController.create);
 
 route.post("/create", roleController.createPost);
 
+route.get("/edit/:id", roleController.edit);
+
+route.patch("/edit/:id", roleController.editPatch);
+
 module.exports = route;
