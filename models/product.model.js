@@ -8,6 +8,10 @@ mongoose.plugin(slug);
 const productSchema = new mongoose.Schema(
   {
     title: String, // san pham 1
+    product_category_id: {
+      type: String, 
+      default: "",
+    },
     description: String,
     price: Number,
     discountPercentage: Number,
