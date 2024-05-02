@@ -12,4 +12,8 @@ route.get("/edit/:id", roleController.edit);
 
 route.patch("/edit/:id", roleController.editPatch);
 
+route.get("/permissions", roleController.permissions);
+
+route.patch("/permissions", roleController.permissionsPatch);
+
 module.exports = route;
