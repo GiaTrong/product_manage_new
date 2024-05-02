@@ -83,7 +83,37 @@ block main
                     td Xóa 
                     each item in records
                         td(class="text-center")
-                            input(type="checkbox")            
+                            input(type="checkbox")    
+
+                //- PHÂN QUYỀN
+                tr
+                    td(colspan="4")
+                        b Phân quyền
+                tr(data-name="roles_view")
+                    td Xem
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")
+                tr(data-name="roles_create")
+                    td Thêm mới
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")
+                tr(data-name="roles_edit")
+                    td Chỉnh sửa
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")
+                tr(data-name="roles_delete")
+                    td Xóa 
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")       
+                tr(data-name="roles_permissions")
+                    td Phân quyền 
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")       
     
 
         form(
