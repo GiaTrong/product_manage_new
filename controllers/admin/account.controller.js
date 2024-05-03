@@ -1,3 +1,6 @@
+// Mã hóa MD5
+const md5 = require("md5");
+// SCHEMA
 const Account = require("../../models/accounts.model");
 
 const systemConfig = require("../../config/system");
@@ -41,8 +44,8 @@ module.exports.create = async (req, res) => {
 // [POST] /admin/accounts/createPost
 module.exports.createPost = async (req, res) => {
   try {
-    console.log(req.body)
-    
+    req.body.password = md5(req.body.password);
+
     const record = new Account(req.body);
 
     await record.save();

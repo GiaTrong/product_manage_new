@@ -17,6 +17,7 @@
     "express": "^4.19.2",
     "express-flash": "github:RGBboy/express-flash",
     "express-session": "^1.18.0",
+    "md5": "^2.3.0",
     "method-override": "^3.0.0",
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.0",
