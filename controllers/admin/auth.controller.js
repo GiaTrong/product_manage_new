@@ -44,3 +44,12 @@ module.exports.loginPost = async (req, res) => {
 
   res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
 };
+
+// [GET] /admin/auth/login
+module.exports.logout = (req, res) => {
+
+  // xóa token khỏi cookie
+  res.clearCookie("token");
+  
+  res.redirect(`${systemConfig.prefixAdmin}/auth/login`);
+};

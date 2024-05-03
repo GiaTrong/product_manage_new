@@ -5,3 +5,8 @@ header.header
                 .inner-logo 
                     a(href="/admin/dashboard") Admin 
             .col-9
+                .d-flex.justify-content-end
+                    a(
+                        href=`${prefixAdmin}/auth/logout`
+                        class="btn btn-danger btn-sm"
+                    ) Đăng xuất
