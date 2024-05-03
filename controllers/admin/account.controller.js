@@ -45,15 +45,27 @@ module.exports.create = async (req, res) => {
 // [POST] /admin/accounts/createPost
 module.exports.createPost = async (req, res) => {
   try {
-    req.body.password = md5(req.body.password);
+    // CHECK EMAIL EXIST
+    const emailExist = await Account.findOne({
+      email: req.body.email,
+      deleted: false
+    });
 
-    const record = new Account(req.body);
+    if (emailExist) {
+      req.flash("error", `Email ${req.body.email} đã tồn tại`);
 
-    await record.save();
+      res.redirect(`back`);
+    } else {
+      req.body.password = md5(req.body.password);
 
-    req.flash("success", "Tạo tài khoản thành công");
+      const record = new Account(req.body);
 
-    res.redirect(`${systemConfig.prefixAdmin}/accounts`);
+      await record.save();
+
+      req.flash("success", "Tạo tài khoản thành công");
+
+      res.redirect(`${systemConfig.prefixAdmin}/accounts`);
+    }
   } catch (error) {
     console.log("Err in role.controller.js");
     req.flash("error", "Tạo tài khoản thất bại");
