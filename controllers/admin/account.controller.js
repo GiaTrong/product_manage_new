@@ -2,6 +2,7 @@
 const md5 = require("md5");
 // SCHEMA
 const Account = require("../../models/accounts.model");
+const Role = require("../../models/roles.model");
 
 const systemConfig = require("../../config/system");
 
@@ -30,11 +31,11 @@ module.exports.create = async (req, res) => {
       deleted: false,
     };
 
-    const records = await Account.find(find);
+    const roles = await Role.find(find);
 
     res.render("admin/pages/accounts/create.pug", {
       pageTitle: "Danh sách tài khoản",
-      records: records,
+      roles: roles,
     });
   } catch (error) {
     console.log("Err in role.controller.js");
