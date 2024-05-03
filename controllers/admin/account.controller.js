@@ -79,3 +79,45 @@ module.exports.createPost = async (req, res) => {
     req.flash("error", "Tạo tài khoản thất bại");
   }
 };
+
+// [GET] /admin/accounts/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+      const find = {
+        deleted: false,
+        _id: req.params.id
+      };
+  
+      const record = await Account.findOne(find).select("-token -password");
+
+      const roles = await Role.find({deleted: false})
+  
+      res.render("admin/pages/accounts/edit.pug", {
+        pageTitle: "Chỉnh sửa sản phẩm",
+        record: record,
+        roles: roles
+      });
+    } catch (error) {
+      console.log("Err in account.edit.js");
+    }
+  };
+
+  // [PATCH] /admin/accounts/edit/:id
+module.exports.editPatch = async (req, res) => {
+    try {
+        if(req.body.password) {
+            req.body.password = md5(req.body.password);
+        } else {
+            delete req.body.password;
+        }
+
+        await Account.updateOne({_id: req.params.id}, req.body)
+
+        req.flash("success", "Thay đổi tài khoản thành công");
+
+        res.redirect(`${systemConfig.prefixAdmin}/accounts`);
+    } catch (error) {
+        console.log("Err in role.controller.js");
+        req.flash("error", "Tạo tài khoản thất bại");
+    }
+};

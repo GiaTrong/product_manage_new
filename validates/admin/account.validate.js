@@ -22,3 +22,19 @@ module.exports.createPost = (req, res, next) => {
   // next: đi tiếp
   next();
 };
+
+module.exports.editPatch = (req, res, next) => {
+  if (!req.body.fullName.trim()) {
+    req.flash("error", "Vui lòng nhập họ tên");
+    res.redirect(`back`);
+    return;
+  }
+
+  if (!req.body.email.trim()) {
+    req.flash("error", "Vui lòng nhập Email");
+    res.redirect(`back`);
+    return;
+  }
+  
+  next();
+};
