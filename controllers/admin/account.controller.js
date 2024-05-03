@@ -115,6 +115,7 @@ module.exports.editPatch = async (req, res) => {
 
         if(emailExist) {
             req.flash("error", `Email ${req.body.email} đã tồn tại`);
+            res.redirect("back");
         } else {
             if(req.body.password) {
                 req.body.password = md5(req.body.password);
@@ -132,6 +133,4 @@ module.exports.editPatch = async (req, res) => {
         console.log("Err in role.controller.js");
         req.flash("error", "Chỉnh sửa tài khoản thất bại");
     }
-
-    res.redirect("back");
 };
