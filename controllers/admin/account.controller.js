@@ -13,14 +13,22 @@ module.exports.index = async (req, res) => {
       deleted: false,
     };
 
-    const records = await Account.find(find);
+    const records = await Account.find(find).select("-password -token");
+
+    for (const record of records) {
+        const role = await Role.findOne({
+            _id: record.role_id,
+            deleted: false,
+        });
+        record.role = role;
+    }
 
     res.render("admin/pages/accounts/index.pug", {
       pageTitle: "Danh sách tài khoản",
       records: records,
     });
   } catch (error) {
-    console.log("Err in role.controller.js");
+    console.log("Err in account.controller.js");
   }
 };
 
