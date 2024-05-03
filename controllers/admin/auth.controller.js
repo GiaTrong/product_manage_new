@@ -38,6 +38,9 @@ module.exports.loginPost = async (req, res) => {
     res.redirect("back");
     return;
   } 
+  
+  // Đăng nhập thành công => lưu TOKEN vào COOKIE
+  res.cookie("token", user.token);
 
   res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
 };
