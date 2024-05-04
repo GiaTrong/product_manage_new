@@ -7,6 +7,10 @@ header.header
             .col-9
                 .d-flex.justify-content-end
                     a(
+                        href=`${prefixAdmin}/my-account`
+                        class="btn btn-primary btn-sm m-2"
+                    ) #{user.fullName}
+                    a(
                         href=`${prefixAdmin}/auth/logout`
-                        class="btn btn-danger btn-sm"
+                        class="btn btn-danger btn-sm m-2"
                     ) Đăng xuất

@@ -3,8 +3,8 @@ require("dotenv").config();
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
 
-console.log(process.env.CLOUD_NAME)
-console.log(process.env.CLOUD_KEY)
+// console.log(process.env.CLOUD_NAME)
+// console.log(process.env.CLOUD_KEY)
 
 // cloudinary
 cloudinary.config({
