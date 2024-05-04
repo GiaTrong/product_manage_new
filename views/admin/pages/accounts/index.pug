@@ -6,17 +6,21 @@ block main
     +alert-success(5000)
 
     h1(class="mb-4") #{pageTitle}
-
+    
+    //- Phân quyền VIEW
+    if(role.permissions.includes("accounts_views"))
     .card.mb-3 
         .card-header Danh sách 
         .card-body 
             .row 
                 .col-8 
                 .col-4.text-right 
-                    a(
-                        href=`${prefixAdmin}/accounts/create`
-                        class="btn btn-outline-success"
-                    ) + Thêm Mới 
+                    //- Phân quyền CREATE   
+                    if(role.permissions.includes("accounts_create"))
+                        a(
+                            href=`${prefixAdmin}/accounts/create`
+                            class="btn btn-outline-success"
+                        ) + Thêm Mới 
             
             table(
                 class=".table .table-hover .table-lg"
@@ -56,33 +60,48 @@ block main
                             td           
                             td #{item.role.title}
                             td
-                                if (item.status == "active")
-                                    a(
-                                        href=`javascript:;`
-                                        button-change-status
-                                        data-status='active'
-                                        data-id=item.id
-                                        class="btn btn-success"
-                                    ) Hoạt động
-                                else
-                                    a(
-                                        href=`javascript:;`
-                                        button-change-status
-                                        data-status='inactive'
-                                        data-id=item.id
-                                        class="btn btn-danger btn-sm"
-                                    ) Dừng Hoạt động
+                                //- Phân quyền EDIT
+                                if(role.permissions.includes("accounts_edit"))
+                                    if (item.status == "active")
+                                        a(
+                                            href=`javascript:;`
+                                            button-change-status
+                                            data-status='active'
+                                            data-id=item.id
+                                            class="btn btn-success"
+                                        ) Hoạt động
+                                    else
+                                        a(
+                                            href=`javascript:;`
+                                            button-change-status
+                                            data-status='inactive'
+                                            data-id=item.id
+                                            class="btn btn-danger btn-sm"
+                                        ) Dừng Hoạt động
+                                else 
+                                    if (item.status == "active")
+                                        button(
+                                            class="btn btn-success btn-sm"
+                                        ) Hoạt động
+                                    else
+                                        button(
+                                            class="btn btn-danger btn-sm"
+                                        ) Dừng Hoạt động
                             td
                                 a(
                                     href=`${prefixAdmin}/accounts/detail/${item.id}`
                                     class="btn btn-secondary btn-sm"
                                 ) chi tiết
-                                a(
-                                    href=`${prefixAdmin}/accounts/edit/${item.id}`
-                                    class="btn btn-warning btn-sm"
-                                ) Sửa
-                                button(
-                                    class="btn btn-danger btn-sm ml-1"
-                                    data-id=item.id 
-                                    button-delete
-                                ) Xóa
+                                //- Phân quyền EDIT
+                                if(role.permissions.includes("accounts_edit"))
+                                    a(
+                                        href=`${prefixAdmin}/accounts/edit/${item.id}`
+                                        class="btn btn-warning btn-sm"
+                                    ) Sửa
+                                //- Phân quyền DELETE
+                                if(role.permissions.includes("account_delete"))
+                                    button(
+                                        class="btn btn-danger btn-sm ml-1"
+                                        data-id=item.id 
+                                        button-delete
+                                    ) Xóa

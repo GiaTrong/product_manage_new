@@ -7,108 +7,110 @@ block main
 
     h1(class="mb-4") #{pageTitle}
 
-    form(
-        action=`${prefixAdmin}/accounts/create`
-        method="POST" 
-        enctype="multipart/form-data"
-    )
-
-        div(class="form-group")
-            label(for="fullName") Họ tên *
-            input(
-                type="text"
-                class="form-control"
-                id="fullName"
-                name="fullName"
-                placeholder="Nguyen Van A"
-                required
+    //- Phân quyền CREATE   
+    if(role.permissions.includes("accounts_create"))
+        form(
+            action=`${prefixAdmin}/accounts/create`
+            method="POST" 
+            enctype="multipart/form-data"
         )
 
-        div(class="form-group")
-            label(for="email") Email *
-            input(
-                type="email"
-                class="form-control"
-                id="email"
-                name="email"
-                placeholder="abc@gmail.com"
-                required
-        )
-
-        div(class="form-group")
-            label(for="password") Mật khẩu *
-            input(
-                type="password"
-                class="form-control"
-                id="password"
-                name="password"
-                required
-        )
-
-        div(class="form-group")
-            label(for="phone") Số điện thoại *
-            input(
-                type="text"
-                class="form-control"
-                id="phone"
-                name="phone"
-                required
-        )
-
-        div(
-            class="form-group"
-            upload-image
-        )
-            label(for="avatar") Avatar
-            br
-            input(
-                type="file"
-                class="form-control-file"
-                id="avatar"
-                name="avatar"
-                accept="image/*"
-                upload-image-input
+            div(class="form-group")
+                label(for="fullName") Họ tên *
+                input(
+                    type="text"
+                    class="form-control"
+                    id="fullName"
+                    name="fullName"
+                    placeholder="Nguyen Van A"
+                    required
             )
-            br
-            img(
-                src=""
-                upload-image-preview
-                class="image-preview"
+
+            div(class="form-group")
+                label(for="email") Email *
+                input(
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="abc@gmail.com"
+                    required
             )
-            br
 
-        div(class="form-group")
-            label(for="role_id") Phân quyền 
-            select(name="role_id" id="role_id" class="form-control")
-                option(disabled) -- Chọn --
-                each item in roles 
-                    option(value=item.id) #{item.title}
-
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="form-check-input"
-                id="statusActive"
-                name="status"
-                value="active"
-                checked
+            div(class="form-group")
+                label(for="password") Mật khẩu *
+                input(
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    required
             )
-            label(for="statusActive" class="form-check-label") Hoạt động
 
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="form-check-input"
-                id="statusInActive"
-                name="status"
-                value="inactive"
+            div(class="form-group")
+                label(for="phone") Số điện thoại *
+                input(
+                    type="text"
+                    class="form-control"
+                    id="phone"
+                    name="phone"
+                    required
             )
-            label(for="statusInActive" class="form-check-label") Dừng hoạt động
 
-        div(class="form-group")
-            button(
-                type="submit"
-                class="btn btn-primary"
-            ) Tạo mới
+            div(
+                class="form-group"
+                upload-image
+            )
+                label(for="avatar") Avatar
+                br
+                input(
+                    type="file"
+                    class="form-control-file"
+                    id="avatar"
+                    name="avatar"
+                    accept="image/*"
+                    upload-image-input
+                )
+                br
+                img(
+                    src=""
+                    upload-image-preview
+                    class="image-preview"
+                )
+                br
 
-        script(src="/admin/js/product.js") 
+            div(class="form-group")
+                label(for="role_id") Phân quyền 
+                select(name="role_id" id="role_id" class="form-control")
+                    option(disabled) -- Chọn --
+                    each item in roles 
+                        option(value=item.id) #{item.title}
+
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="statusActive"
+                    name="status"
+                    value="active"
+                    checked
+                )
+                label(for="statusActive" class="form-check-label") Hoạt động
+
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="statusInActive"
+                    name="status"
+                    value="inactive"
+                )
+                label(for="statusInActive" class="form-check-label") Dừng hoạt động
+
+            div(class="form-group")
+                button(
+                    type="submit"
+                    class="btn btn-primary"
+                ) Tạo mới
+
+            script(src="/admin/js/product.js") 
