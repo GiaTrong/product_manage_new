@@ -12,6 +12,8 @@ const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 // Express Flash
 const flash = require("express-flash");
+// moment
+const moment = require('moment');
 
 // ROUTES
 const route = require("./routes/client/index.route");
@@ -56,10 +58,15 @@ app.use(express.static(`${__dirname}/public`));
 
 //  APP VARIABLES LOCALS
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+// muốn dùng thằng moment bên FE => biến nó về biến TOÀN CỤC
+app.locals.moment = moment;
 
 // ROUTE
 route(app);
 routeAdmin(app);
+
+// console.log(process.version);
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port: localhost:${port}`);

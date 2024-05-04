@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema(
   {
     title: String, // san pham 1
     product_category_id: {
-      type: String, 
+      type: String,
       default: "",
     },
     description: String,
@@ -20,15 +20,26 @@ const productSchema = new mongoose.Schema(
     status: String,
     position: Number,
     slug: {
-        type: String,
-        slug: "title", //san-pham-1
-        unique: true,
+      type: String,
+      slug: "title", //san-pham-1
+      unique: true,
+    },
+    createdBy: {
+      account_id: String,
+      createdAt: {
+        type: Date,
+        default: Date.now,
       },
+    },
+    deletedBy: {
+      account_id: String,
+      deleteAt: Date, // giá trị default chỉ sinh ra khi tạo mới 1 => Khi xóa là cập nhật 
+                      // => giá trị default ko được cập nhật vào
+    },
     deleted: {
       type: Boolean,
       default: false,
     },
-    deleteAt: Date,
   },
   {
     timestamps: true,

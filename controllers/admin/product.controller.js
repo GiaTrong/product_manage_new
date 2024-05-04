@@ -1,4 +1,6 @@
 const Product = require("../../models/product.model");
+const Account = require("../../models/accounts.model");
+
 const productCategory = require("../../models/product-category.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
@@ -60,6 +62,19 @@ module.exports.index = async (req, res) => {
     .sort(sort)
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
+
+  // Information of creater
+  for (const product of products) {
+    const user = await Account.findOne({
+      _id: product.createdBy.account_id,
+    });
+
+    if (user) {
+      product.userFullName = user.fullName;
+    } else {
+      product.userFullName = "";
+    }
+  }
 
   res.render("admin/pages/products/index.pug", {
     pageTitle: "Trang quản lí sản phẩm",
@@ -140,7 +155,7 @@ module.exports.deleteItem = async (req, res) => {
 
 // [GET] /admin/products/create
 module.exports.create = async (req, res) => {
-  const records = await productCategory.find({deleted: false});
+  const records = await productCategory.find({ deleted: false });
 
   const newRecords = createTreeHelper.createTree(records);
 
@@ -164,6 +179,10 @@ module.exports.createPost = async (req, res) => {
     req.body.position = parseInt(req.body.position);
   }
 
+  req.body.createdBy = {
+    account_id: res.locals.user._id,
+  };
+
   // create new Product
   const product = new Product(req.body);
 
@@ -182,7 +201,7 @@ module.exports.edit = async (req, res) => {
   try {
     const product = await Product.findOne(find);
 
-    const records = await productCategory.find({deleted: false});
+    const records = await productCategory.find({ deleted: false });
 
     const newRecords = createTreeHelper.createTree(records);
 
