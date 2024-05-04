@@ -33,8 +33,8 @@ const productSchema = new mongoose.Schema(
     },
     deletedBy: {
       account_id: String,
-      deleteAt: Date, // giá trị default chỉ sinh ra khi tạo mới 1 => Khi xóa là cập nhật 
-                      // => giá trị default ko được cập nhật vào
+      deletedAt: Date, // giá trị default chỉ sinh ra khi tạo mới 1 => Khi xóa là cập nhật
+      // => giá trị default ko được cập nhật vào
     },
     deleted: {
       type: Boolean,

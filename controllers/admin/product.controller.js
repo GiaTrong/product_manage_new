@@ -145,10 +145,12 @@ module.exports.deleteItem = async (req, res) => {
     { _id: id },
     {
       deleted: true,
-      deleteAt: new Date(),
+      deletedBy: {
+        account_id: res.locals.user._id,
+        deletedAt: new Date(),
+      },
     }
   );
-
   // res.send("oke")
   res.redirect("back");
 };
