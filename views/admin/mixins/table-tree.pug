@@ -26,36 +26,51 @@ mixin table-tree(records, level = 1)
                     name="position"
                 )
             td
-                if (item.status == "active")
-                    a(
-                        href=`javascript:;`
-                        button-change-status
-                        data-status='active'
-                        data-id=item.id
-                        class="btn btn-success"
-                    ) Hoạt động
-                else
-                    a(
-                        href=`javascript:;`
-                        button-change-status
-                        data-status='inactive'
-                        data-id=item.id
-                        class="btn btn-danger"
-                    ) Dừng Hoạt động
+                if(role.permissions.includes("products-category_edit"))
+                    //- ROLE: products-category_edit
+                    if (item.status == "active")
+                        a(
+                            href=`javascript:;`
+                            button-change-status
+                            data-status='active'
+                            data-id=item.id
+                            class="btn btn-success"
+                        ) Hoạt động
+                    else
+                        a(
+                            href=`javascript:;`
+                            button-change-status
+                            data-status='inactive'
+                            data-id=item.id
+                            class="btn btn-danger"
+                        ) Dừng Hoạt động
+                else 
+                    if (item.status == "active")
+                        button(
+                            class="btn btn-success"
+                        ) Hoạt động
+                    else
+                        button(
+                            class="btn btn-danger"
+                        ) Dừng Hoạt động
             td
                 a(
                     href=`${prefixAdmin}/products-category/detail/${item.id}`
                     class="btn btn-secondary btn-sm"
                 ) chi tiết
-                a(
-                    href=`${prefixAdmin}/products-category/edit/${item.id}`
-                    class="btn btn-warning btn-sm"
-                    parent_id=item.parent_id
-                ) Sửa
-                button(
-                    class="btn btn-danger btn-sm ml-1"
-                    data-id=item.id 
-                    button-delete
-                ) Xóa
+                if(role.permissions.includes("products-category_edit"))
+                    //- ROLE: products-category_edit
+                    a(
+                        href=`${prefixAdmin}/products-category/edit/${item.id}`
+                        class="btn btn-warning btn-sm"
+                        parent_id=item.parent_id
+                    ) Sửa
+                if(role.permissions.includes("products-category_delete"))
+                    //- ROLE: products-category_delete
+                    button(
+                        class="btn btn-danger btn-sm ml-1"
+                        data-id=item.id 
+                        button-delete
+                    ) Xóa
         if item.children && item.children.length > 0
             +table-tree(item.children, level + 1)
