@@ -4,6 +4,7 @@ include ../../mixins/select-tree
 block main
     h1(class="mb-4") #{pageTitle}
 
+    //- products-category_create EXIST
     if(role.permissions.includes("products-category_create"))
         form(
             action=`${prefixAdmin}/products-category/create`

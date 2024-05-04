@@ -6,6 +6,8 @@ block main
     +alert-success(500)
 
     h1(class="mb-4") #{pageTitle}
+
+    //- products-category_edit EXIST
     if(role.permissions.includes("products-category_edit"))
 
         form(

@@ -2,6 +2,7 @@ extend ../../layouts/default.pug
 include ../../mixins/table-tree
 
 block main
+    //- products-category_view EXIST
     if(role.permissions.includes("products-category_view"))
 
         h1 #{pageTitle}
@@ -13,6 +14,7 @@ block main
                 .row 
                     .col-8
                     .col-4 
+                        //- products-category_create EXIST
                         if(role.permissions.includes("products-category_create"))
                             a(
                                 href=`${prefixAdmin}/products-category/create`

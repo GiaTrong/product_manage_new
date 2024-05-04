@@ -12,6 +12,7 @@ const authRoutes = require("./auth.route.js");
 module.exports = (app) => {
   const PATH_ADMIN = systemConfig.prefixAdmin;
 
+  // Mỗi khi chạy vào cái ROUTE nào đó => chạy qua authMiddlewares
   app.use(PATH_ADMIN + "/dashboard", authMiddlewares.requireAuth, dashboardRoutes);
 
   app.use(PATH_ADMIN + "/products", authMiddlewares.requireAuth, productRoutes);

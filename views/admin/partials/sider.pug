@@ -3,6 +3,7 @@
         ul
             li
                 a(href=`${prefixAdmin}/dashboard`) Tổng quan
+            //- Phân quyền bằng cách check role.permissions có bao gồm quyền nào đó hay ko ?
             if(role.permissions.includes("products_view"))
                 li
                     a(href=`${prefixAdmin}/products`) Sản phẩm

@@ -4,7 +4,9 @@ const Role = require("../../models/roles.model");
 const systemConfig = require("../../config/system");
 
 module.exports.requireAuth = async (req, res, next) => {
+  // token does not exist
   if (!req.cookies.token) {
+    // redirect LOGIN
     res.redirect(`${systemConfig.prefixAdmin}/auth/login`);
   } else {
     // find user by TOKEN
@@ -14,10 +16,13 @@ module.exports.requireAuth = async (req, res, next) => {
     }).select("-password");
 
     if (!user) {
+      // redirect LOGIN
       res.redirect(`${systemConfig.prefixAdmin}/auth/login`);
     } else {
+      // login SUCCESS
       console.log("login success");
       
+      // find ROLE by user.role_id
       const role = await Role.findOne({
         _id: user.role_id,
         deleted: false,
