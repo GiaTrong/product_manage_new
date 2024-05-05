@@ -25,12 +25,26 @@ module.exports.index = async (req, res) => {
 //[GET] module.exports.index : index is name of function
 module.exports.detail = async (req, res) => {
   try {
+    // tìm products theo SLUG
     const product = await Product.findOne({
       deleted: false,
       status: "active",
-      slug: req.params.slug,
+      slug: req.params.slugProduct,
     });
-    console.log(product);
+
+    // thêm key: category
+    if(product.product_category_id) {
+      const category = await ProductCategory.findOne({
+        _id: product.product_category_id,
+        deleted: false,
+        status: "active",
+      });
+
+      product.category = category;
+    }
+
+    // lấy giá mới
+    product.priceNew = productsHelper.priceNewProduct(product);
 
     // render in viewer
     res.render("client/pages/products/detail", {
