@@ -58,7 +58,7 @@ module.exports.category = async (req, res) => {
         parent_id: parentId,
         deleted: false,
         status: "active",
-      })
+      });
 
       let allSub = [...subs];
 
@@ -74,13 +74,13 @@ module.exports.category = async (req, res) => {
     // tìm ra list con của category truyền vào
     const listSubCategory = await getSubCategory(category.id);
     // tìm ra list id
-    const listSubCategoryId = listSubCategory.map(subCategory => {
+    const listSubCategoryId = listSubCategory.map((subCategory) => {
       return subCategory.id;
-    })
+    });
 
     const products = await Product.find({
       // tìm trong mảng CHỨA id category, và con của những category đó
-      product_category_id: { $in : [category.id, ...listSubCategoryId]},
+      product_category_id: { $in: [category.id, ...listSubCategoryId] },
       deleted: false,
       status: "active",
     }).sort({ position: "desc" });
