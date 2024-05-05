@@ -1,14 +1,29 @@
 const productCategory = require("../../models/product-category.model");
 
 const systemConfig = require("../../config/system");
-
 const createTreeHelper = require("../../helpers/createTree");
+const paginationHelper = require("../../helpers/pagination");
+
 
 // [GET] /admin/products-category
 module.exports.index = async (req, res) => {
   const find = {
     deleted: false,
   };
+  
+  // PAGINATION
+  const countProduct = await productCategory.countDocuments(find);
+
+  let objectPagination = paginationHelper(
+    {
+      currentPage: 1,
+      limitItem: 6,
+    },
+    req,
+    countProduct
+  );
+
+  console.log(objectPagination)
 
   const records = await productCategory.find(find);
 
@@ -17,6 +32,7 @@ module.exports.index = async (req, res) => {
   res.render("admin/pages/product-category/index.pug", {
     pageTitle: "Trang danh mục sản phẩm",
     records: newRecords,
+    pagination: objectPagination,
   });
 };
 

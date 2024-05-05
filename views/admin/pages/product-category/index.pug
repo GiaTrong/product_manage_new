@@ -1,5 +1,6 @@
 extend ../../layouts/default.pug
 include ../../mixins/table-tree
+include ../../mixins/pagination
 
 block main
     //- products-category_view EXIST
@@ -38,6 +39,6 @@ block main
                     tbody
                         +table-tree(records)
                         
-
+        +pagination(pagination)
 
         script(src="/admin/js/product.js") 
