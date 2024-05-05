@@ -2,6 +2,7 @@ const Product = require("../../models/product.model");
 const ProductCategory = require("../../models/product-category.model");
 
 const productsHelper = require("../../helpers/product");
+const productsCategoryHelper = require("../../helpers/product-category");
 
 // [GET] /products
 module.exports.index = async (req, res) => {
@@ -51,28 +52,8 @@ module.exports.category = async (req, res) => {
       status: "active",
     });
 
-    // tìm những thằng CON của category bằng đệ quy
-    const getSubCategory = async (parentId) => {
-      // tìm con bằng id category
-      const subs = await ProductCategory.find({
-        parent_id: parentId,
-        deleted: false,
-        status: "active",
-      });
-
-      let allSub = [...subs];
-
-      for (const sub of subs) {
-        // tìm những con(cháu) của con của category(ông)
-        const childs = await getSubCategory(sub.id);
-        allSub = allSub.concat(childs);
-      }
-
-      return allSub;
-    };
-
     // tìm ra list con của category truyền vào
-    const listSubCategory = await getSubCategory(category.id);
+    const listSubCategory = await productsCategoryHelper.getSubCategory(category.id);
     // tìm ra list id
     const listSubCategoryId = listSubCategory.map((subCategory) => {
       return subCategory.id;
