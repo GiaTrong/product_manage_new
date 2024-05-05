@@ -2,23 +2,41 @@ const Product = require("../../models/product.model");
 const ProductCategory = require("../../models/product-category.model");
 
 const productsHelper = require("../../helpers/product");
+const paginationHelper = require("../../helpers/pagination");
 const productsCategoryHelper = require("../../helpers/product-category");
 
 // [GET] /products
 module.exports.index = async (req, res) => {
-  // find({CONDITION}) => find all products which fit(phù hợp) with condition
-  const products = await Product.find({
+  const find = {
     status: "active",
     deleted: false,
-  }).sort({ position: "desc" });
+  };
 
-  // console.log(products)
+  // PAGINATION
+  const countProduct = await Product.countDocuments(find);
+
+  let objectPagination = paginationHelper(
+    {
+      currentPage: 1,
+      limitItem: 6,
+    },
+    req,
+    countProduct
+  );
+
+  // find({CONDITION}) => find all products which fit(phù hợp) with condition
+  const products = await Product
+  .find(find)
+  .sort({ position: "desc" })
+  .limit(objectPagination.limitItem)
+  .skip(objectPagination.skip);
 
   const newProducts = productsHelper.priceNewProducts(products);
 
   res.render("client/pages/products/index.pug", {
     pageTitle: "Trang products",
     products: newProducts,
+    pagination: objectPagination,
   });
 };
 
@@ -33,7 +51,7 @@ module.exports.detail = async (req, res) => {
     });
 
     // thêm key: category
-    if(product.product_category_id) {
+    if (product.product_category_id) {
       const category = await ProductCategory.findOne({
         _id: product.product_category_id,
         deleted: false,
@@ -67,7 +85,9 @@ module.exports.category = async (req, res) => {
     });
 
     // tìm ra list con của category truyền vào
-    const listSubCategory = await productsCategoryHelper.getSubCategory(category.id);
+    const listSubCategory = await productsCategoryHelper.getSubCategory(
+      category.id
+    );
     // tìm ra list id
     const listSubCategoryId = listSubCategory.map((subCategory) => {
       return subCategory.id;
