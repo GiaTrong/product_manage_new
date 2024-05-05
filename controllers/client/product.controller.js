@@ -1,5 +1,7 @@
 const Product = require("../../models/product.model")
 
+const productsHelper = require("../../helpers/product");
+
 // [GET] /products
 module.exports.index = async (req, res) => {
   // find({CONDITION}) => find all products which fit(phù hợp) with condition
@@ -10,10 +12,7 @@ module.exports.index = async (req, res) => {
 
   // console.log(products)
 
-  const newProducts = products.map(item => {
-    item.priceNew = Math.floor(item.price * (100 - item.discountPercentage) / 100);
-    return item;
-  })
+  const newProducts = productsHelper.priceNewProducts(products);
 
     res.render("client/pages/products/index.pug", {
         pageTitle: "Trang products",
