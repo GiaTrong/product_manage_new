@@ -28,13 +28,13 @@ module.exports.index = async (req, res) => {
       item.productInfo = productInfo;
 
       // total price product
-      item.totalPrice = parseInt(productInfo.priceNew) * item.quantity;
+      productInfo.totalPrice = parseInt(productInfo.priceNew) * item.quantity;
     }
   }
 
   // total price cart
   cart.totalPrice = cart.products.reduce(
-    (sum, item) => sum + item.totalPrice,
+    (sum, item) => sum + item.productInfo.totalPrice,
     0
   );
 
