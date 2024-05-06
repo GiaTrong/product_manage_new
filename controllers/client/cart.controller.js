@@ -5,7 +5,45 @@ const productsHelper = require("../../helpers/product");
 
 // [GET] /cart
 module.exports.index = async (req, res) => {
-  res.send("oke");
+  // cartId
+  const cartId = req.cookies.cartId;
+
+  // find cart by cartId
+  const cart = await Cart.findOne({
+    _id: cartId,
+  });
+
+  if (cart.products.length > 0) {
+    // find all product exist in cart
+    for (const item of cart.products) {
+      const productId = item.product_id;
+
+      const productInfo = await Product.findOne({
+        _id: productId,
+      });
+
+      productInfo.priceNew = productsHelper.priceNewProduct(productInfo);
+
+      // bởi vì lặp qua từng phần tử trong mảng, mà phần tử đó là OBJ => OBJ được thêm key value mới luôn
+      item.productInfo = productInfo;
+
+      // total price product
+      item.totalPrice = parseInt(productInfo.priceNew) * item.quantity;
+    }
+  }
+
+  console.log(cart.products);
+
+  // total price cart
+  cart.totalPrice = cart.products.reduce(
+    (sum, item) => sum + item.totalPrice,
+    0
+  );
+
+  res.render("client/pages/cart/index.pug", {
+    pageTitle: "Giỏ hàng",
+    cartDetail: cart,
+  });
 };
 
 // [POST] /cart/add/:productId
@@ -40,7 +78,7 @@ module.exports.addPost = async (req, res) => {
         {
           "products.$.quantity": newQuantity,
         }
-      ); 
+      );
     } else {
       // lưu vào giỏ hàng
       await Cart.updateOne(
