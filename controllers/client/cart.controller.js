@@ -128,3 +128,40 @@ module.exports.delete = async (req, res) => {
     res.redirect("back");
   }
 };
+
+// [GET] /cart/update/:productId/:quantity
+module.exports.update = async (req, res) => {
+  try {
+    const product_id = req.params.productId;
+    const quantity = req.params.quantity;
+
+    // find product exist in cart or not
+    const productInCart = (
+      await Cart.findOne({
+        _id: req.cookies.cartId,
+      })
+    ).products.find((item) => item.product_id == product_id);
+
+    if (productInCart) {
+      // update product in cart
+      await Cart.updateOne(
+        { 
+          _id: req.cookies.cartId,
+          'products.product_id': product_id,
+        },
+        {
+          'products.$.quantity': quantity,
+        }
+      );
+      // Cart exist
+      req.flash("success", "Cập nhật thành công");
+    } else {
+      req.flash("error", "Cập nhật không trong cart");
+    }
+
+    res.redirect("back");
+  } catch (error) {
+    console.log(err);
+    res.redirect("back");
+  }
+};
