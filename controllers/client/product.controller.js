@@ -103,9 +103,19 @@ module.exports.category = async (req, res) => {
     // format lại giá
     const productsNew = productsHelper.priceNewProducts(products);
 
+    let objectPagination = paginationHelper(
+      {
+        currentPage: 1,
+        limitItem: 6,
+      },
+      req,
+      productsNew.length, 
+    );
+
     res.render("client/pages/products/index.pug", {
       pageTitle: category.title,
       products: productsNew,
+      pagination : objectPagination,
     });
   } catch (error) {
     console.log(error);
