@@ -95,3 +95,36 @@ module.exports.addPost = async (req, res) => {
     req.flash("error", "Thêm sản phẩm vào giỏ hàng thất bại");
   }
 };
+
+// [GET] /cart/delete/:productId
+module.exports.delete = async (req, res) => {
+  try {
+    const product_id = req.params.productId;
+
+    // find product exist in cart or not
+    const productInCart = (
+      await Cart.findOne({
+        _id: req.cookies.cartId,
+      })
+    ).products.find((item) => item.product_id == product_id);
+
+    if (productInCart) {
+      // delete product in cart
+      await Cart.updateOne(
+        { _id: req.cookies.cartId },
+        {
+          $pull: { products: { product_id: product_id } },
+        }
+      );
+      // Cart exist
+      req.flash("success", "Xóa thành công");
+    } else {
+      req.flash("error", "Sản phẩm không còn tồn tại trong cart");
+    }
+
+    res.redirect("back");
+  } catch (error) {
+    console.log(err);
+    res.redirect("back");
+  }
+};
