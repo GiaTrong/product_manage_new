@@ -10,7 +10,9 @@ if (inputsQuantity) {
       const quantity = e.target.value;
       const productId = input.getAttribute("product-id");
 
-      window.location.href = `/cart/update/${productId}/${quantity}`;
+      if (parseFloat(quantity) >= 1) {
+        window.location.href = `/cart/update/${productId}/${quantity}`;
+      }
     });
   });
 }
