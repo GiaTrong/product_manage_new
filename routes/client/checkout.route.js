@@ -3,6 +3,9 @@ const router = express.Router();
 
 const controller = require("../../controllers/client/checkout.controller");
 
-router.get("/order", controller.index);
+router.get("/", controller.index);
+
+router.post("/order", controller.orderPost);
+
 
 module.exports = router;
