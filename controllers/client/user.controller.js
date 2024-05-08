@@ -98,8 +98,16 @@ module.exports.loginPost = async (req, res) => {
   const expiresTime = 1000 * 60 * 60 * 24 * 365;
   res.cookie("tokenUser", user.tokenUser, {
     maxAge: expiresTime,
-  })
+  });
 
   req.flash("success", `Đăng nhập thành công`);
   res.redirect("/");
+};
+
+// [GET] /user/logout
+module.exports.logout = async (req, res) => {
+  
+    res.clearCookie("tokenUser");
+    
+    res.redirect("/user/login");
 };
