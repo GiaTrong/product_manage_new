@@ -39,11 +39,11 @@ header.header
                                 +sub-menu(layoutProductsCategory, pathProduct)
                         li 
                             a(href="/cart") Giỏ hàng (#{miniCart ? miniCart.totalQuantity : "0"})
-                        if(tokenUser) 
+                        if(user) 
                             li 
                                 a(href="/user/") User
                         else 
                             li 
                                 a(href="/user/register") Đăng ký
                             li
-                                a(href="/user/register") Login
+                                a(href="/user/login") Login

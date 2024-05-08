@@ -1,10 +1,13 @@
 const User = require("../../models/users.model");
 
-module.exports.userId = async (req, res, next) => {
+module.exports.infoUser = async (req, res, next) => {
+  if (req.cookies.tokenUser) {
+    const user = await User.findOne({
+      tokenUser: req.cookies.tokenUser,
+      deleted: false,
+    }).select("-password");
+    res.locals.user = user;
+  }
 
-    if(req.cookies.tokenUser) {
-        res.locals.tokenUser = req.cookies.tokenUser;
-    }
-
-    next();
-}
+  next();
+};

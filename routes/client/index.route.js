@@ -14,7 +14,7 @@ module.exports = (app) => {
 
   app.use(cartMiddlewares.cartId); //check cartId
 
-  app.use(userMiddlewares.userId); //
+  app.use(userMiddlewares.infoUser); //
 
   app.use("/", homeRoutes);
 
