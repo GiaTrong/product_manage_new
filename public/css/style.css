@@ -232,3 +232,20 @@ I .box-head.inner-title {
   cursor: pointer;
 }
 /* End Show Alert */
+
+
+/* Image Preview */
+.image-preview {
+  width: 400px;
+  height: auto;
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+/* Phát hiện nếu có ảnh và thuộc tính src="" => ẩn đi  */
+.image-preview[src=""] { 
+  display: none;
+}
+/* End Image Preview */

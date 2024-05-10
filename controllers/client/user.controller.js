@@ -6,12 +6,53 @@ const Cart = require("../../models/cart.model");
 const generateHelper = require("../../helpers/generate");
 const sendMailHelper = require("../../helpers/sendMail");
 
-// // [GET] /user/
-// module.exports.index = async (req, res) => {
-//   res.render("client/pages/user/index.pug", {
-//     pageTitle: "Trang cá nhân",
-//   });
-// };
+// [GET] /user/
+module.exports.index = async (req, res) => {
+  const user = await User.findOne({
+    tokenUser: req.cookies.tokenUser,
+  }).select("-password");
+
+  res.render("client/pages/user/index.pug", {
+    pageTitle: "Trang cá nhân",
+    user: user,
+  });
+};
+
+// [GET] /user/edit
+module.exports.edit = async (req, res) => {
+  const user = await User.findOne({
+    tokenUser: req.cookies.tokenUser,
+  }).select("-password");
+
+  res.render("client/pages/user/edit.pug", {
+    pageTitle: "Trang đăng ký",
+  });
+};
+
+// [PATCH] /user/edit
+module.exports.editPatch = async (req, res) => {
+  try {
+    if (!req.body.password) {
+      delete req.body.password;
+    } else {
+      req.body.password = md5(req.body.password);
+    }
+
+    const user = await User.findOne({
+      tokenUser: req.cookies.tokenUser,
+    });
+
+    await User.updateOne({ _id: user.id }, req.body);
+
+    req.flash("success", "Thay đổi thông tin thành công");
+
+    res.redirect("back");
+  } catch (error) {
+    req.flash("error", "Thay đổi thông tin thất bại");
+
+    res.redirect("back");
+  }
+};
 
 // [GET] /user/register
 module.exports.register = async (req, res) => {

@@ -2,7 +2,6 @@ extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
 include ../../mixins/alert.pug
 
-
 block main 
     +alert-success(5000)
     +alert-error(5000)
@@ -11,3 +10,20 @@ block main
         .row 
             .col-12 
                 +box-head(pageTitle)
+
+            .col-12 
+                img(
+                    src=(user.avatar ? user.avatar : "")
+                    alt=user.fullName
+                    upload-image-preview
+                    class="image-preview"
+                )
+                br
+                p Họ tên: <b>#{user.fullName}</b>
+                p Email: <b>#{user.email}</b>
+                p Số điện thoại: <b>#{user.phone}</b>
+
+                a(
+                    href=`/user/edit`
+                    class="btn btn-primary"
+                ) Chỉnh sửa thông tin
