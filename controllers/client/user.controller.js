@@ -3,6 +3,7 @@ const User = require("../../models/users.model");
 const ForgotPassword = require("../../models/forgot-password.module");
 
 const generateHelper = require("../../helpers/generate");
+const sendMailHelper = require("../../helpers/sendMail");
 
 // // [GET] /user/
 // module.exports.index = async (req, res) => {
@@ -149,6 +150,13 @@ module.exports.forgotPasswordPost = async (req, res) => {
   await forgotPassword.save();
 
   // Việc2 : Gửi mã OTP qua email của User
+  const subject = `Mã OTP xác minh lấy lại mật khẩu`;
+  const html = `
+    Mã OTP xác minh lấy lại mật khẩu là <b>${otp}</b>. 
+    Thời hạn sử dụng chỉ có 3p
+    Lưu ý không được để lộ mã OTP 
+  `;
+  sendMailHelper.sendMail(req.body.email, subject, html);
 
   res.redirect(`/user/password/otp?email=${req.body.email}`);
 };
@@ -209,6 +217,5 @@ module.exports.resetPasswordPost = async (req, res) => {
   } catch (error) {
     req.flash("error", "Đổi mật khẩu thất bại");
     res.redirect("back");
-
   }
 };
