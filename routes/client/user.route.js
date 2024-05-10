@@ -26,10 +26,10 @@ router.post(
 
 router.get("/password/otp", controller.otpPassword);
 
-router.post(
-  "/password/otp",
-  validate.otpPassword,
-  controller.otpPasswordPost
-);
+router.post("/password/otp", validate.otpPassword, controller.otpPasswordPost);
+
+router.get("/password/reset", controller.resetPassword);
+
+router.post("/password/reset", validate.confirmPassword, controller.resetPasswordPost);
 
 module.exports = router;

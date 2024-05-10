@@ -62,3 +62,25 @@ module.exports.otpPassword = (req, res, next) => {
   
   next();
 };
+
+module.exports.confirmPassword = (req, res, next) => {
+  if (!req.body.password.trim()) {
+    req.flash("error", "Vui lòng nhập password");
+    res.redirect(`back`);
+    return;
+  }
+
+  if (!req.body.confirmPassword.trim()) {
+    req.flash("error", "Vui lòng nhập xác nhận lại mật khẩu");
+    res.redirect(`back`);
+    return;
+  }
+
+  if(req.body.password.trim() != req.body.confirmPassword.trim()) {
+    req.flash("error", "Vui lòng xác nhận lại mật khẩu");
+    res.redirect(`back`);
+    return;
+  }
+  
+  next();
+};

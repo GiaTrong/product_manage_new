@@ -185,5 +185,30 @@ module.exports.otpPasswordPost = async (req, res) => {
 
   res.cookie("tokenUser", user.tokenUser);
 
-  res.redirect("user/password/reset");
+  res.redirect("/user/password/reset");
+};
+
+// [GET] /user/password/reset
+module.exports.resetPassword = async (req, res) => {
+  res.render("client/pages/user/reset-password.pug", {
+    pageTitle: "Trang đổi mật khẩu",
+  });
+};
+
+// [POST] /user/password/reset
+module.exports.resetPasswordPost = async (req, res) => {
+  try {
+    const password = req.body.password;
+    const tokenUser = req.cookies.tokenUser;
+
+    await User.updateOne({ tokenUser: tokenUser }, { password: md5(password) });
+
+    req.flash("success", "Đổi mật khẩu thành công");
+
+    res.redirect("/");
+  } catch (error) {
+    req.flash("error", "Đổi mật khẩu thất bại");
+    res.redirect("back");
+
+  }
 };
