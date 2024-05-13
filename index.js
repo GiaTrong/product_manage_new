@@ -13,7 +13,11 @@ const bodyParser = require("body-parser");
 // Express Flash
 const flash = require("express-flash");
 // moment
-const moment = require('moment');
+const moment = require("moment");
+// TẠO RA 1 CÁI SERVER RIÊNG CHO THẰNG SOCKET
+const { createServer } = require("http");
+// SocketIO
+const { Server } = require("socket.io");
 
 // ROUTES
 const route = require("./routes/client/index.route");
@@ -50,6 +54,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
+// SocketIO
+const server = createServer(app);
+const io = new Server(server);
+
+io.on("connection", (socket) => {
+  console.log("a user connected", socket.id);
+});
+
 // CONNECT DATABSE
 database.connect();
 
@@ -67,7 +79,7 @@ routeAdmin(app);
 
 // console.log(process.version);
 
-
-app.listen(port, () => {
+// Ở đây chúng ta dùng server thay cho app nếu dùng thằng socket
+server.listen(port, () => {
   console.log(`Example app listening on port: localhost:${port}`);
 });
