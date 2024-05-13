@@ -57,10 +57,9 @@ app.set("view engine", "pug");
 // SocketIO
 const server = createServer(app);
 const io = new Server(server);
+global._io = io; // biến toàn cục dùng ở đâu cx được 
 
-io.on("connection", (socket) => {
-  console.log("a user connected", socket.id);
-});
+
 
 // CONNECT DATABSE
 database.connect();
