@@ -249,3 +249,30 @@ I .box-head.inner-title {
   display: none;
 }
 /* End Image Preview */
+
+/* chat  */
+.chat .inner-form {
+  display: flex;
+  align-items: center;
+}
+
+.chat .inner-form input {
+  flex: 1;
+  height: 32px;
+  border: 1px solid #ddde;
+  border-radius: 15px;
+  padding: 0 10px;
+  outline: none;
+}
+
+.chat .inner-form button {
+  border-radius: 15px;
+  border: 1px solid #FE5DA3;
+  background: #FE5DA3;
+  color: #fff;
+  height: 32px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+/* end chat  */

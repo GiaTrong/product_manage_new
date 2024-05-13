@@ -6,5 +6,8 @@ module.exports.connect = async () => {
     console.log("connect success");
   } catch (error) {
     console.log("connect false");
+
+    await mongoose.connect(`mongodb://localhost:27017/product-managenent`);
+
   }
 };
