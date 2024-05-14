@@ -1,3 +1,5 @@
+import * as Popper from "https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js";
+
 // CLIENT_SEND_MESSAGE
 const formsendData = document.querySelector(".chat .inner-form");
 if (formsendData) {
@@ -42,13 +44,42 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
   body.appendChild(div);
 
   // khi gửi đi vẫn phải cho thằng scroll xuống dưới cùng
-  body.scrollTop =  body.scrollHeight
+  body.scrollTop = body.scrollHeight;
 });
 // END SERVER_RETURN_MESSAGE
 
 // SCROLL CHAT TO BUTTON
 const bodyChat = document.querySelector(".chat .inner-body");
-if(bodyChat) {
-  bodyChat.scrollTop =  bodyChat.scrollHeight;  // thuộc tính để cho thằng có scroll cách bên trên bao nhiêu
+if (bodyChat) {
+  bodyChat.scrollTop = bodyChat.scrollHeight; // thuộc tính để cho thằng có scroll cách bên trên bao nhiêu
 }
 // END SCROLL CHAT TO BUTTON
+
+// EMOJI PICKER
+const emojiPicker = document.querySelector("emoji-picker");
+
+if (emojiPicker) {
+  const inputChat = document.querySelector(
+    ".chat .inner-form input[name = 'content']"
+  );
+
+  emojiPicker.addEventListener("emoji-click", (event) => {
+    const icon = event.detail.unicode;
+    // console.log(icon)
+    inputChat.value = inputChat.value + icon;
+  });
+}
+// END EMOJI PICKER
+
+// ẨN HIỆN EMOJI
+const buttonIcon = document.querySelector(".button-icon");
+// console.log(buttonIcon)
+if (buttonIcon) {
+  const tooltip = document.querySelector(".tooltip");
+  Popper.createPopper(buttonIcon, tooltip);
+
+  buttonIcon.onclick = () => {
+    tooltip.classList.toggle("shown");
+  };
+}
+// END ẨN HIỆN EMOJI

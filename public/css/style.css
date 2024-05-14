@@ -376,3 +376,14 @@ I .box-head.inner-title {
   background-size: contain;
 }
 /* End chat */
+
+/* TOOLIP EMOJI*/
+.tooltip {
+  visibility: hidden;
+}
+
+.tooltip.shown {
+  visibility: visible;
+  opacity: 1;
+}
+/* END TOOLIP EMOJI*/
