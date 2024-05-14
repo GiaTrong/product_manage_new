@@ -13,7 +13,7 @@ block main
                 +box-head(pageTitle)
 
             .col-12 
-                .chat 
+                .chat(my-id=user.id)
                     .inner-body
                         each chat in chats 
                             div(class=(chat.infoUser.id == user.id ? "inner-outgoing" : "inner-incoming"))
@@ -22,16 +22,16 @@ block main
                                         .inner-name #{chat.infoUser.fullName}
                                     .inner-content
                                         | #{chat.content}
-                        .inner-foot
-                        form(
-                            class='inner-form' 
-                            action="" 
-                            method="POST"
+                    .inner-foot
+                    form(
+                        class='inner-form' 
+                        action="" 
+                        method="POST"
+                    )
+                        input(
+                            type="text" 
+                            placeholder="Nhập nội dung..." 
+                            name="content"
                         )
-                            input(
-                                type="text" 
-                                placeholder="Nhập nội dung..." 
-                                name="content"
-                            )
-                            button(type="submit")
-                                i.fa-solid.fa-paper-plane
+                        button(type="submit")
+                            i.fa-solid.fa-paper-plane

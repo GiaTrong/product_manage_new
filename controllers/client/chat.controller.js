@@ -4,6 +4,7 @@ const User = require("../../models/users.model");
 // [GET] /chat/
 module.exports.index = async (req, res) => {
   const userId = res.locals.user.id; // lấy bên authen
+  const fullName = res.locals.user.fullName;
 
   // socketIO
   // sự kiện  => khi có người đăng nhập vào
@@ -21,6 +22,13 @@ module.exports.index = async (req, res) => {
       });
 
       await chat.save();
+
+      // trả về data cho client 
+      _io.emit("SERVER_RETURN_MESSAGE", {
+        fullName: fullName,
+        userId: userId,
+        content: content
+      })
     });
   });
 
