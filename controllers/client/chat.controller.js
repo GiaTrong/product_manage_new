@@ -13,9 +13,6 @@ module.exports.index = async (req, res) => {
   _io.once("connection", (socket) => {
     // lắng nghe sự kiện bên client gửi sang
     socket.on("CLIENT_SEND_MESSAGE", async (content) => {
-      // console.log(content);
-      // console.log(userId);
-
       const chat = new Chat({
         user_id: userId,
         content: content,
@@ -23,12 +20,21 @@ module.exports.index = async (req, res) => {
 
       await chat.save();
 
-      // trả về data cho client 
+      // trả về data cho client
       _io.emit("SERVER_RETURN_MESSAGE", {
         fullName: fullName,
         userId: userId,
-        content: content
-      })
+        content: content,
+      });
+    });
+
+    //  CLIENT_SEND_TYPING
+    socket.on("CLIENT_SEND_TYPING", (type) => {
+      socket.broadcast.emit("SERVER_RETURN_TYPING", {
+        userId: userId,
+        fullName: fullName,
+        type: type,
+      });
     });
   });
 
@@ -44,7 +50,6 @@ module.exports.index = async (req, res) => {
 
     chat.infoUser = infoUser;
   }
-
 
   res.render("client/pages/chat/index.pug", {
     pageTitle: "Trang chu",

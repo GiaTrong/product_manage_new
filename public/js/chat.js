@@ -1,5 +1,27 @@
 import * as Popper from "https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js";
 
+// scrollTop
+const scrollTop = () => {
+  const body = document.querySelector(".chat .inner-body");
+  // khi gửi đi vẫn phải cho thằng scroll xuống dưới cùng
+  body.scrollTop = body.scrollHeight;
+};
+// END scrollTop
+
+//  SHOW TYPING
+var timeOut;
+const showTyping = () => {
+  socket.emit("CLIENT_SEND_TYPING", "show");
+
+  clearTimeout(timeOut);
+
+  // cứ sau 3s nếu ngta ko gõ => hidden
+  timeOut = setTimeout(() => {
+    socket.emit("CLIENT_SEND_TYPING", "hidden");
+  }, 5000);
+};
+// END SHOW TYPING
+
 // CLIENT_SEND_MESSAGE
 const formsendData = document.querySelector(".chat .inner-form");
 if (formsendData) {
@@ -12,6 +34,8 @@ if (formsendData) {
       // socket ấy ở trong file socket.js
       socket.emit("CLIENT_SEND_MESSAGE", content);
       e.target.content.value = "";
+      // khi ấn gửi => typing bị xóa đi
+      socket.emit("CLIENT_SEND_TYPING", "hidden");
     }
   });
 }
@@ -21,6 +45,7 @@ if (formsendData) {
 socket.on("SERVER_RETURN_MESSAGE", (data) => {
   const myId = document.querySelector("[my-id]").getAttribute("my-id");
   const body = document.querySelector(".chat .inner-body");
+  const boxTyping = document.querySelector(".inner-list-typing");
 
   // tạo thẻ div
   const div = document.createElement("div");
@@ -41,10 +66,9 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
   `;
 
   // cho thẻ cha nó 1 đoạn chat (div) mới
-  body.appendChild(div);
-
-  // khi gửi đi vẫn phải cho thằng scroll xuống dưới cùng
-  body.scrollTop = body.scrollHeight;
+  body.insertBefore(div, boxTyping);
+  //
+  scrollTop();
 });
 // END SERVER_RETURN_MESSAGE
 
@@ -67,6 +91,13 @@ if (emojiPicker) {
     const icon = event.detail.unicode;
     // console.log(icon)
     inputChat.value = inputChat.value + icon;
+    // người dùng chèn icon => showTyping()
+    showTyping();
+
+    // khi người dùng bắt đầu chat => showTyping()
+    inputChat.addEventListener("keyup", (e) => {
+      showTyping();
+    });
   });
 }
 // END EMOJI PICKER
@@ -83,3 +114,48 @@ if (buttonIcon) {
   };
 }
 // END ẨN HIỆN EMOJI
+
+
+// SERVER_RETURN_TYPING
+const innerListTyping = document.querySelector(".chat .inner-list-typing");
+if (innerListTyping) {
+  socket.on("SERVER_RETURN_TYPING", (data) => {
+    // console.log(data);
+
+    if (data.type == "show") {
+      // check xem cái typing nó tồn tại chưa => chỉ nên xuất hiện 1 lần mỗi ông
+      const existTying = innerListTyping.querySelector(
+        `.box-typing[user-id='${data.userId}']`
+      );
+
+      if (!existTying) {
+        const boxTyping = document.createElement("div");
+        boxTyping.classList.add("box-typing");
+        boxTyping.setAttribute("user-id", data.userId);
+
+        boxTyping.innerHTML = `
+            <div class="inner-name">${data.fullName}</div>
+            <div class="inner-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          `;
+
+        innerListTyping.appendChild(boxTyping);
+
+        scrollTop();
+      }
+    } else {
+      const boxTypingRemove = innerListTyping.querySelector(
+        `[user-id='${data.userId}']`
+      );
+
+      if (boxTypingRemove) {
+        innerListTyping.removeChild(boxTypingRemove);
+      }
+    }
+  });
+}
+
+// END SERVER_RETURN_TYPING
