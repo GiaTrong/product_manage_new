@@ -40,5 +40,15 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
 
   // cho thẻ cha nó 1 đoạn chat (div) mới
   body.appendChild(div);
+
+  // khi gửi đi vẫn phải cho thằng scroll xuống dưới cùng
+  body.scrollTop =  body.scrollHeight
 });
 // END SERVER_RETURN_MESSAGE
+
+// SCROLL CHAT TO BUTTON
+const bodyChat = document.querySelector(".chat .inner-body");
+if(bodyChat) {
+  bodyChat.scrollTop =  bodyChat.scrollHeight;  // thuộc tính để cho thằng có scroll cách bên trên bao nhiêu
+}
+// END SCROLL CHAT TO BUTTON
